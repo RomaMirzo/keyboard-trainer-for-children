@@ -16,13 +16,17 @@ let test = [
   'Помолчав немножко.'
 ];
 
-let newLetters = '';
-let oldLetters = test[strokeNumber];
+let newLetters = test[0].split('');
+newLetters = newLetters.shift();
 
-addText('', oldLetters);
+let oldLetters = test[0].split('');
+oldLetters.shift();
+oldLetters = oldLetters.join('');
 
 let testTextArray = oldLetters.split('');
 let userLetter;
+
+addText(newLetters, oldLetters);
 
 setInterval(() => {
   // если написали все строки - выводим алерт
@@ -31,6 +35,7 @@ setInterval(() => {
     newGame = true;
   }
 
+  // принимаем букву от пользователя
   userLetter = input.value;
   let userTextArray = userLetter.split('');
 
@@ -51,10 +56,9 @@ setInterval(() => {
     input.value = '';
   }
 
-  // если буквы совпадают - красив нажатую в зелёный
-  if(userLetter === testTextArray[0]) {
-    newLetters = userTextArray[0];
-    testTextArray.shift();
+  // если буквы совпадают - красим нажатую в зелёный
+  if(userLetter === newLetters) {
+    newLetters = testTextArray.shift();
     oldLetters = testTextArray.join('');
 
     addText(newLetters, oldLetters);
