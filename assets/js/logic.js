@@ -28,9 +28,7 @@ setInterval(() => {
   // если написали все строки - выводим алерт
   if(test.length === strokeNumber) {
     alert('Ты молодец! Уверен, что сможешь ещё быстрее ;)');
-    addText('', '');
     newGame = true;
-    // return;
   }
 
   userLetter = input.value;
@@ -47,6 +45,8 @@ setInterval(() => {
     oldLetters = test[strokeNumber];
     if(oldLetters) testTextArray = oldLetters.split('');
 
+    if(oldLetters === undefined) oldLetters = 'Молодец!';
+
     addText('', oldLetters);
     input.value = '';
   }
@@ -59,7 +59,6 @@ setInterval(() => {
 
     addText(newLetters, oldLetters);
     input.value = '';
-    console.log(strokeNumber);
   }
 
   // если в инпуте больше одной буквы - что-то вводится не то

@@ -10,17 +10,32 @@
   <header>
     <h1>Клавиатурный тренажёр</h1>
   </header>
-  <div class="container">
-
-    <div class="text">
-      <p id="newText"></p>
+  <div class="container-base">
+    <div class="container-part description">
+      <p>Поставь руки на клавиатуру так, как показано на картинке.<br>
+        У каждого пальца есть "свои клавиши"(выделены цветом). Старайся печатать так, что бы каждый палец нажимал на клавишу своего цвета.<br>
+        По началу это может быть трудно, но очень полезно. Совсем скоро ты начнёшь быстро печатать.<br>
+        Ты справишься!
+      </p>
     </div>
 
-    <input id="input">
+    <div class="container-part description">
+      <p>Введи текст, который находится в жёлтой рамочке:</p>
+      <div class="text">
+        <p id="newText"></p>
+      </div>
 
-    <p id="warning" class="goodWarning">
-      Всё отлично :)
-    </p>
+      <input id="input">
+
+      <p id="warning" class="goodWarning">
+        Всё отлично :)
+      </p>
+    </div>
+
+    <div class="container-part description">
+      <img src="./assets/img/keyboard-schema.jpg" alt="keyboard-schema">
+    </div>
+
   </div>
 
   <script src="./assets/js/logic.js"></script>

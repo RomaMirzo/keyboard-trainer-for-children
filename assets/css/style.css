@@ -15,16 +15,36 @@ h1 {
   color: #fff;
 }
 
-.container {
+img {
+  margin: 0 auto;
+  width: 70%;
+}
+
+.container-base {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+}
+
+.description {
+  margin: 20px 10px;
+  padding: 10px;
+  text-align: center;
+  border: 4px solid #ccc;
+  border-radius: 30px;
+  font: 13px/27px Arial,sans-serif;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.container-part {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-
 .text {
   margin: 30px auto;
-  max-width: 300px;
+  max-width: 400px;
   border: 4px solid #99b4d1;
   border-radius: 20px;
   background: #fc3;
@@ -68,4 +88,11 @@ p#newText {
 
 .badWarning {
   color: red;
+}
+
+@media (max-width: 1024px) {
+  .container-base {
+    display: flex;
+    flex-direction: column;
+  }
 }
