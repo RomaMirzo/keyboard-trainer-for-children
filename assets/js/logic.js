@@ -4,8 +4,6 @@ let textFill = document.getElementById('newText');
 let input = document.getElementById('input');
 let warning = document.getElementById('warning');
 
-let newGame = false;
-
 let strokeNumber = 0;
 let test = [
   'Тетя Сова и кошка',
@@ -24,58 +22,73 @@ oldLetters.shift();
 oldLetters = oldLetters.join('');
 
 let testTextArray = oldLetters.split('');
-let userLetter;
+
+let userLetter, userTextArray;
 
 addText(newLetters, oldLetters);
 
-setInterval(() => {
-  // если написали все строки - выводим алерт
-  if(test.length === strokeNumber) {
-    alert('Ты молодец! Уверен, что сможешь ещё быстрее ;)');
-    newGame = true;
-  }
+let startTest = () => {
+  let testCheck = setInterval(() => {
+    // если написали все строки - выводим алерт
+    if(test.length === strokeNumber) {
+      clearInterval(testCheck);
 
-  // принимаем букву от пользователя
-  userLetter = input.value;
-  let userTextArray = userLetter.split('');
+      let repeatTest = confirm('Ты молодец! Уверен, что сможешь ещё быстрее ;) Повторим попытку?');
 
-  // если закончилась строка - добавляем новую
-  if(testTextArray.length < 1) {
-    if(newGame) {
-      strokeNumber = 0;
-      newGame = false;
-    } else {
-      strokeNumber++;
+      if(repeatTest) {
+        strokeNumber = 0;
+        
+        newLetters = test[0].split('');
+        newLetters = newLetters.shift();
+        
+        oldLetters = test[0].split('');
+        oldLetters.shift();
+        oldLetters = oldLetters.join('');
+
+        testTextArray = oldLetters.split('');
+        
+        addText(newLetters, oldLetters);
+        
+        startTest();
+      }
     }
-    oldLetters = test[strokeNumber];
-    if(oldLetters) testTextArray = oldLetters.split('');
 
-    if(oldLetters === undefined) oldLetters = 'Молодец!';
+    // принимаем буквы от пользователя
+    userLetter = input.value;
+    userTextArray = userLetter.split('');
 
-    addText('', oldLetters);
-    input.value = '';
-  }
+    // если закончилась строка - добавляем новую
+    if(testTextArray.length < 1 && !newLetters) {
+      strokeNumber++;
 
-  // если буквы совпадают - красим нажатую в зелёный
-  if(userLetter === newLetters) {
-    newLetters = testTextArray.shift();
-    oldLetters = testTextArray.join('');
+      oldLetters = test[strokeNumber];
+      if(oldLetters) testTextArray = oldLetters.split('');
 
-    addText(newLetters, oldLetters);
-    input.value = '';
-  }
+      newLetters = testTextArray.shift();
 
-  // если в инпуте больше одной буквы - что-то вводится не то
-  if(input.value.length > 1) {
-    warning.classList.add('badWarning');
-    warning.innerHTML = 'Что-то не так :(';
-  } else {
-    warning.classList.remove('badWarning');
-    warning.innerHTML = 'Всё отлично :)';
-  }
-}, 10);
+      updateTest(newLetters, testTextArray);
+    }
+
+    // если буквы совпадают - красим нажатую в зелёный
+    if(userLetter === newLetters) {
+      newLetters = testTextArray.shift();
+      
+      updateTest(newLetters, testTextArray);
+    }
+
+    // если в инпуте больше одной буквы - что-то вводится не то
+    isWarning();
+  }, 10);
+}
+
+input.addEventListener('click', () => {
+  input.placeholder = '';
+  startTest();
+});
 
 function addText(newText, oldText) {
+  if(newText === undefined) newText = 'Молодец!';
+
   textFill.insertAdjacentHTML('beforeend', `
   <p id="added">
     <span class="rightLetters">${newText}</span>${oldText}
@@ -85,6 +98,22 @@ function addText(newText, oldText) {
   let oldElement = document.querySelectorAll('#added');
   if(oldElement.length > 1) {
     oldElement[0].remove();
+  }
+}
+
+function updateTest(newLettters, oldLetters) {
+  oldLetters = oldLetters.join('');
+  addText(newLettters, oldLetters);
+  input.value = '';
+}
+
+function isWarning() {
+  if(input.value.length > 1) {
+    warning.classList.add('badWarning');
+    warning.innerHTML = 'Что-то не так :(';
+  } else {
+    warning.classList.remove('badWarning');
+    warning.innerHTML = 'Всё отлично :)';
   }
 }
 
