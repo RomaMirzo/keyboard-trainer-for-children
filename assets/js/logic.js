@@ -88,6 +88,7 @@ input.addEventListener('click', () => {
 
 function addText(newText, oldText) {
   if(newText === undefined) newText = 'Молодец!';
+  if(newText == ' ') newText = '_';
 
   textFill.insertAdjacentHTML('beforeend', `
   <p id="added">
